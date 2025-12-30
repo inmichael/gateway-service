@@ -967,10 +967,10 @@
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.16.0.tgz#2249090633e04063176863a050c8f0808d2b6d2b"
   integrity sha512-xgAyonlVVS+q7Vc7qLW0UrJU7rSFcETRWsqdXZtjzRU8dF+6CkozTK4V4y1LwOX7j8r/vHphjDeMeGI4tNGeGA==
 
-"@mondocinema/contracts@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.0.tgz#546861f20539c51d474fc8f594c1712cce18af76"
-  integrity sha512-Kg/aixlWtcKfLDh3nrcfI4AbUBLJ2H7+hHcorxfpqlztpjhgpbAb3WcHgQ9GObzc0tbrYvAYuuvNdM+4fZAlmg==
+"@mondocinema/contracts@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.1.tgz#135472aa98d78f04ad2a26bd81cba40730b5d30e"
+  integrity sha512-fdF0Nv5qr51wsFL9pboddS064o9Z/qNclm889ARgI/Zv7BTC+W6LmpgbDzsl4NgyFpm5zvSpP4H5N6uOh4we4w==
   dependencies:
     "@nestjs/microservices" "^11.1.11"
     rxjs "^7.8.2"
