@@ -972,10 +972,10 @@
   resolved "https://registry.yarnpkg.com/@mondocinema/common/-/common-1.0.0.tgz#ffb8418517d6c0863cf9a153a750d9a5336d36f4"
   integrity sha512-85ZlJJ67/uK9Z342lfUIBuMiquiZy5P0UPwi09rML2qAS+TqJHGy8Ly/kSm17P6KvcGdsEC54Zby/o36nkZkzQ==
 
-"@mondocinema/contracts@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.5.tgz#1bac300ef325e076bc6561a6c63b8173dd314c66"
-  integrity sha512-hXlZDY+c09WZEXOWZWh5b7hXXIRypUee3F+coC1Q/Xgfq37Vy65nkCDargSjsU0BtFhBrwkl6tD3UKNws7ym/w==
+"@mondocinema/contracts@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.6.tgz#482425570293543642507122daea4abcd1ce6ca6"
+  integrity sha512-chGvG8l8ZShj6vdxZfqAwhwDsM1EeaOPUfFDq907QJAUvWysppzSDRhdPjYTDmKPVNiEj/PjCR8m7J7m97XJIA==
   dependencies:
     "@nestjs/microservices" "^11.1.11"
     rxjs "^7.8.2"
