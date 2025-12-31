@@ -1,4 +1,15 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import type { Response } from "express";
+import { lastValueFrom } from "rxjs";
+
+import {
+	Body,
+	Controller,
+	HttpCode,
+	HttpStatus,
+	Post,
+	Res,
+} from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { ApiOperation } from "@nestjs/swagger";
 
 import { AuthClientGrpc } from "./auth.grpc";
@@ -6,7 +17,10 @@ import { SendOtpRequest, VerifyOtpRequest } from "./dto/requests";
 
 @Controller("auth")
 export class AuthController {
-	constructor(private readonly grpcClient: AuthClientGrpc) {}
+	constructor(
+		private readonly grpcClient: AuthClientGrpc,
+		private readonly configService: ConfigService,
+	) {}
 
 	@ApiOperation({
 		summary: "Send OTP code",
@@ -25,7 +39,22 @@ export class AuthController {
 	})
 	@Post("otp/verify")
 	@HttpCode(HttpStatus.OK)
-	async verifyOtp(@Body() dto: VerifyOtpRequest) {
-		return this.grpcClient.verifyOtp(dto);
+	async verifyOtp(
+		@Body() dto: VerifyOtpRequest,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { accessToken, refreshToken } = await lastValueFrom(
+			this.grpcClient.verifyOtp(dto),
+		);
+
+		res.cookie("refreshToken", refreshToken, {
+			httpOnly: true,
+			secure: this.configService.get("NODE_ENV") !== "development",
+			domain: this.configService.getOrThrow("COOKIES_DOMAIN"),
+			sameSite: "lax",
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+		});
+
+		return { accessToken };
 	}
 }
