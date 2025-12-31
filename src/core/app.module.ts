@@ -1,13 +1,24 @@
+import { AccountsModule } from "src/modules/accounts/accounts.module";
 import { AuthModule } from "src/modules/auth/auth.module";
 
+import { PassportModule } from "@mondocinema/passport";
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { getPassportConfig } from "./config";
 
 @Module({
-	imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule],
+	imports: [
+		ConfigModule.forRoot({ isGlobal: true }),
+		PassportModule.registerAsync({
+			useFactory: getPassportConfig,
+			inject: [ConfigService],
+		}),
+		AuthModule,
+		AccountsModule,
+	],
 	controllers: [AppController],
 	providers: [AppService],
 })

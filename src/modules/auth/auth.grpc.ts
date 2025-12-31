@@ -1,5 +1,6 @@
 import type {
 	AuthServiceClient,
+	RefreshRequest,
 	SendOtpRequest,
 	VerifyOtpRequest,
 } from "@mondocinema/contracts/gen/auth";
@@ -22,5 +23,9 @@ export class AuthClientGrpc implements OnModuleInit {
 
 	verifyOtp(req: VerifyOtpRequest) {
 		return this.authService.verifyOtp(req);
+	}
+
+	refresh(req: RefreshRequest) {
+		return this.authService.refresh(req);
 	}
 }

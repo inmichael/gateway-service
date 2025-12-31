@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { Request, Response } from "express";
 import { lastValueFrom } from "rxjs";
 
 import {
@@ -7,6 +7,7 @@ import {
 	HttpCode,
 	HttpStatus,
 	Post,
+	Req,
 	Res,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -56,5 +57,44 @@ export class AuthController {
 		});
 
 		return { accessToken };
+	}
+
+	@ApiOperation({
+		summary: "Refresh access token",
+		description: "Renews access token using refresh token from cookies.",
+	})
+	@Post("refresh")
+	@HttpCode(HttpStatus.OK)
+	async refresh(
+		@Req() req: Request,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { accessToken, refreshToken } = await lastValueFrom(
+			this.grpcClient.refresh({
+				refreshToken: req.cookies?.refreshToken as string,
+			}),
+		);
+
+		res.cookie("refreshToken", refreshToken, {
+			httpOnly: true,
+			secure: this.configService.get("NODE_ENV") !== "development",
+			domain: this.configService.getOrThrow("COOKIES_DOMAIN"),
+			sameSite: "lax",
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+		});
+
+		return { accessToken };
+	}
+
+	@ApiOperation({
+		summary: "Logout",
+		description: "Clears the refresh token cookie and logs the user out",
+	})
+	@Post("logout")
+	@HttpCode(HttpStatus.OK)
+	async logout(@Res({ passthrough: true }) res: Response) {
+		res.clearCookie("refreshToken");
+
+		return { ok: true };
 	}
 }

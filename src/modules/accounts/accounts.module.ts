@@ -3,22 +3,20 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
-import { AccountsModule } from "../accounts/accounts.module";
-
-import { AuthController } from "./auth.controller";
-import { AuthClientGrpc } from "./auth.grpc";
+import { AccountsController } from "./accounts.controller";
+import { AccountsClientGrpc } from "./accounts.grpc";
 
 @Module({
 	imports: [
 		ClientsModule.registerAsync([
 			{
-				name: "AUTH_PACKAGE",
+				name: "ACCOUNTS_PACKAGE",
 				useFactory(configService: ConfigService) {
 					return {
 						transport: Transport.GRPC,
 						options: {
-							package: "auth.v1",
-							protoPath: PROTO_PATHS.AUTH,
+							package: "accounts.v1",
+							protoPath: PROTO_PATHS.ACCOUNTS,
 							url: configService.getOrThrow<string>("AUTH_GRPC_URL"),
 						},
 					};
@@ -26,9 +24,9 @@ import { AuthClientGrpc } from "./auth.grpc";
 				inject: [ConfigService],
 			},
 		]),
-		AccountsModule,
 	],
-	controllers: [AuthController],
-	providers: [AuthClientGrpc],
+	controllers: [AccountsController],
+	providers: [AccountsClientGrpc],
+	exports: [AccountsClientGrpc],
 })
-export class AuthModule {}
+export class AccountsModule {}

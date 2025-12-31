@@ -972,10 +972,10 @@
   resolved "https://registry.yarnpkg.com/@mondocinema/common/-/common-1.0.0.tgz#ffb8418517d6c0863cf9a153a750d9a5336d36f4"
   integrity sha512-85ZlJJ67/uK9Z342lfUIBuMiquiZy5P0UPwi09rML2qAS+TqJHGy8Ly/kSm17P6KvcGdsEC54Zby/o36nkZkzQ==
 
-"@mondocinema/contracts@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.3.tgz#86ddbe6222ef5d51a5a3051bb938a09a3cafcc0d"
-  integrity sha512-yTNEhmFDhrOpVF+Cij91sAvJ+ZSGybjcDC19MH9GztUJmNms5DQ+UrFsL8GHMk+7wOZzlF7SuCVYMCze5kGJww==
+"@mondocinema/contracts@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.0.5.tgz#1bac300ef325e076bc6561a6c63b8173dd314c66"
+  integrity sha512-hXlZDY+c09WZEXOWZWh5b7hXXIRypUee3F+coC1Q/Xgfq37Vy65nkCDargSjsU0BtFhBrwkl6tD3UKNws7ym/w==
   dependencies:
     "@nestjs/microservices" "^11.1.11"
     rxjs "^7.8.2"
@@ -987,6 +987,16 @@
   integrity sha512-icb3x2POQ+UVZ8TplUJ5tfaaa3apCDNhyZce8RSrtBT0+/zNvxKeTOJ5tWicfZYcEAEI7U8G92nztlV6FAKOYQ==
   dependencies:
     "@trivago/prettier-plugin-sort-imports" "^6.0.0"
+
+"@mondocinema/passport@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@mondocinema/passport/-/passport-1.0.0.tgz#f90c7a5a1d06cf041df57e44bf1c17697f55e609"
+  integrity sha512-6/EN4l66WbP2dHb//FM6/HNJnVIoyV1EEIwL6IOI03BGrmN7eQY8e2ff8V5eCB+7whuCc80Ptxng+iiJaYVBJg==
+  dependencies:
+    "@nestjs/common" "^11.1.11"
+    "@nestjs/core" "^11.1.11"
+    reflect-metadata "^0.2.2"
+    rxjs "^7.8.2"
 
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.12"
@@ -1021,7 +1031,7 @@
     webpack "5.103.0"
     webpack-node-externals "3.0.0"
 
-"@nestjs/common@^11.0.1":
+"@nestjs/common@^11.0.1", "@nestjs/common@^11.1.11":
   version "11.1.11"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-11.1.11.tgz#7ab20a2c91c4c2c43794bfc92177121d0a946ce5"
   integrity sha512-R/+A8XFqLgN8zNs2twhrOaE7dJbRQhdPX3g46am4RT/x8xGLqDphrXkUIno4cGUZHxbczChBAaAPTdPv73wDZA==
@@ -1041,7 +1051,7 @@
     dotenv-expand "12.0.1"
     lodash "4.17.21"
 
-"@nestjs/core@^11.0.1":
+"@nestjs/core@^11.0.1", "@nestjs/core@^11.1.11":
   version "11.1.11"
   resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-11.1.11.tgz#9eae7e488c45a443685567c1555ae3cd739d12fe"
   integrity sha512-H9i+zT3RvHi7tDc+lCmWHJ3ustXveABCr+Vcpl96dNOxgmrx4elQSTC4W93Mlav2opfLV+p0UTHY6L+bpUA4zA==
