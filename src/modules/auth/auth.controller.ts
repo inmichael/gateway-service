@@ -4,17 +4,23 @@ import { lastValueFrom } from "rxjs";
 import {
 	Body,
 	Controller,
+	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
 	Req,
 	Res,
+	UnauthorizedException,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ApiOperation } from "@nestjs/swagger";
 
 import { AuthClientGrpc } from "./auth.grpc";
-import { SendOtpRequest, VerifyOtpRequest } from "./dto/requests";
+import {
+	SendOtpRequest,
+	TelegramVerifyRequest,
+	VerifyOtpRequest,
+} from "./dto/requests";
 
 @Controller("auth")
 export class AuthController {
@@ -96,5 +102,39 @@ export class AuthController {
 		res.clearCookie("refreshToken");
 
 		return { ok: true };
+	}
+
+	@Get("telegram")
+	async telegramInit() {
+		return this.grpcClient.telegramInit();
+	}
+
+	@Post("telegram/verify")
+	@HttpCode(HttpStatus.OK)
+	async telegramVerify(
+		@Body() dto: TelegramVerifyRequest,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const query = JSON.parse(atob(dto.tgAuthResult)) as Record<string, string>;
+
+		const result = await lastValueFrom(
+			this.grpcClient.telegramVerify({ query }),
+		);
+
+		if ("url" in result && result.url) return result;
+
+		if (result.accessToken && result.refreshToken) {
+			res.cookie("refreshToken", result.refreshToken, {
+				httpOnly: true,
+				secure: this.configService.get("NODE_ENV") !== "development",
+				domain: this.configService.getOrThrow("COOKIES_DOMAIN"),
+				sameSite: "lax",
+				maxAge: 30 * 24 * 60 * 60 * 1000,
+			});
+
+			return { accessToken: result.accessToken };
+		}
+
+		throw new UnauthorizedException("Invalid Telegram login response");
 	}
 }

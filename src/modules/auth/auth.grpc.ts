@@ -2,6 +2,7 @@ import type {
 	AuthServiceClient,
 	RefreshRequest,
 	SendOtpRequest,
+	TelegramVerifyRequest,
 	VerifyOtpRequest,
 } from "@mondocinema/contracts/gen/auth";
 import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
@@ -27,5 +28,13 @@ export class AuthClientGrpc implements OnModuleInit {
 
 	refresh(req: RefreshRequest) {
 		return this.authService.refresh(req);
+	}
+
+	telegramInit() {
+		return this.authService.telegramInit({});
+	}
+
+	telegramVerify(req: TelegramVerifyRequest) {
+		return this.authService.telegramVerify(req);
 	}
 }
