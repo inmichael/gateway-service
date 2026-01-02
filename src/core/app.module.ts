@@ -1,5 +1,6 @@
 import { AccountsModule } from "src/modules/accounts/accounts.module";
 import { AuthModule } from "src/modules/auth/auth.module";
+import { UsersModule } from "src/modules/users/users.module";
 
 import { PassportModule } from "@mondocinema/passport";
 import { Module } from "@nestjs/common";
@@ -18,6 +19,7 @@ import { getPassportConfig } from "./config";
 		}),
 		AuthModule,
 		AccountsModule,
+		UsersModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
