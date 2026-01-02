@@ -1,45 +1,13 @@
-import type {
-	AuthServiceClient,
-	RefreshRequest,
-	SendOtpRequest,
-	TelegramConsumeRequest,
-	TelegramVerifyRequest,
-	VerifyOtpRequest,
-} from "@mondocinema/contracts/gen/auth";
-import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
+import { AbstractGrpcClient } from "src/shared/grpc";
+
+import { InjectGrpcClient } from "@mondocinema/common";
+import type { AuthServiceClient } from "@mondocinema/contracts/gen/auth";
+import { Injectable } from "@nestjs/common";
 import type { ClientGrpc } from "@nestjs/microservices";
 
 @Injectable()
-export class AuthClientGrpc implements OnModuleInit {
-	private authService: AuthServiceClient;
-
-	constructor(@Inject("AUTH_PACKAGE") private readonly client: ClientGrpc) {}
-
-	onModuleInit() {
-		this.authService = this.client.getService("AuthService");
-	}
-
-	sendOtp(req: SendOtpRequest) {
-		return this.authService.sendOtp(req);
-	}
-
-	verifyOtp(req: VerifyOtpRequest) {
-		return this.authService.verifyOtp(req);
-	}
-
-	refresh(req: RefreshRequest) {
-		return this.authService.refresh(req);
-	}
-
-	telegramInit() {
-		return this.authService.telegramInit({});
-	}
-
-	telegramVerify(req: TelegramVerifyRequest) {
-		return this.authService.telegramVerify(req);
-	}
-
-	telegramConsume(req: TelegramConsumeRequest) {
-		return this.authService.telegramConsume(req);
+export class AuthClientGrpc extends AbstractGrpcClient<AuthServiceClient> {
+	constructor(@InjectGrpcClient("AUTH_PACKAGE") client: ClientGrpc) {
+		super(client, "AuthService");
 	}
 }

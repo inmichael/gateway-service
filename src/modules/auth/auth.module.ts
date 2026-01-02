@@ -1,7 +1,5 @@
-import { PROTO_PATHS } from "@mondocinema/contracts";
+import { GrpcModule } from "@mondocinema/common";
 import { Module } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { ClientsModule, Transport } from "@nestjs/microservices";
 
 import { AccountsModule } from "../accounts/accounts.module";
 
@@ -9,25 +7,7 @@ import { AuthController } from "./auth.controller";
 import { AuthClientGrpc } from "./auth.grpc";
 
 @Module({
-	imports: [
-		ClientsModule.registerAsync([
-			{
-				name: "AUTH_PACKAGE",
-				useFactory(configService: ConfigService) {
-					return {
-						transport: Transport.GRPC,
-						options: {
-							package: "auth.v1",
-							protoPath: PROTO_PATHS.AUTH,
-							url: configService.getOrThrow<string>("AUTH_GRPC_URL"),
-						},
-					};
-				},
-				inject: [ConfigService],
-			},
-		]),
-		AccountsModule,
-	],
+	imports: [GrpcModule.register(["AUTH_PACKAGE"]), AccountsModule],
 	controllers: [AuthController],
 	providers: [AuthClientGrpc],
 })

@@ -1,4 +1,3 @@
-import { lastValueFrom } from "rxjs";
 import { CurrentUser, Protected } from "src/shared/decorators";
 
 import {
@@ -34,7 +33,7 @@ export class UsersController {
 	@Get("me")
 	@HttpCode(HttpStatus.OK)
 	async getMe(@CurrentUser() userId: string) {
-		const { user } = await lastValueFrom(this.grpcClient.getMe({ id: userId }));
+		const { user } = await this.grpcClient.call("getMe", { id: userId });
 
 		return user;
 	}
@@ -47,6 +46,6 @@ export class UsersController {
 		@CurrentUser() userId: string,
 		@Body() dto: PatchUserRequest,
 	) {
-		return this.grpcClient.patchUser({ userId, name: dto.name });
+		return this.grpcClient.call("patchUser", { userId, name: dto.name });
 	}
 }

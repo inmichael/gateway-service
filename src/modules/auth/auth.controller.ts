@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { lastValueFrom } from "rxjs";
 
 import {
 	Body,
@@ -37,7 +36,7 @@ export class AuthController {
 	@Post("otp/send")
 	@HttpCode(HttpStatus.OK)
 	async sendOtp(@Body() dto: SendOtpRequest) {
-		return this.grpcClient.sendOtp(dto);
+		return this.grpcClient.call("sendOtp", dto);
 	}
 
 	@ApiOperation({
@@ -51,8 +50,9 @@ export class AuthController {
 		@Body() dto: VerifyOtpRequest,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const { accessToken, refreshToken } = await lastValueFrom(
-			this.grpcClient.verifyOtp(dto),
+		const { accessToken, refreshToken } = await this.grpcClient.call(
+			"verifyOtp",
+			dto,
 		);
 
 		res.cookie("refreshToken", refreshToken, {
@@ -76,10 +76,9 @@ export class AuthController {
 		@Req() req: Request,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const { accessToken, refreshToken } = await lastValueFrom(
-			this.grpcClient.refresh({
-				refreshToken: req.cookies?.refreshToken as string,
-			}),
+		const { accessToken, refreshToken } = await this.grpcClient.call(
+			"refresh",
+			{ refreshToken: req.cookies?.refreshToken as string },
 		);
 
 		res.cookie("refreshToken", refreshToken, {
@@ -107,7 +106,7 @@ export class AuthController {
 
 	@Get("telegram")
 	async telegramInit() {
-		return this.grpcClient.telegramInit();
+		return this.grpcClient.call("telegramInit", {});
 	}
 
 	@Post("telegram/verify")
@@ -118,9 +117,7 @@ export class AuthController {
 	) {
 		const query = JSON.parse(atob(dto.tgAuthResult)) as Record<string, string>;
 
-		const result = await lastValueFrom(
-			this.grpcClient.telegramVerify({ query }),
-		);
+		const result = await this.grpcClient.call("telegramVerify", { query });
 
 		if ("url" in result && result.url) return result;
 
@@ -145,8 +142,9 @@ export class AuthController {
 		@Body() { sessionId }: TelegramFinalizeRequest,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const { accessToken, refreshToken } = await lastValueFrom(
-			this.grpcClient.telegramConsume({ sessionId }),
+		const { accessToken, refreshToken } = await this.grpcClient.call(
+			"telegramConsume",
+			{ sessionId },
 		);
 
 		res.cookie("refreshToken", refreshToken, {

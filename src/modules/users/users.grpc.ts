@@ -1,26 +1,13 @@
-import type {
-	GetMeRequest,
-	PatchUserRequest,
-	UsersServiceClient,
-} from "@mondocinema/contracts/gen/users";
-import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
+import { AbstractGrpcClient } from "src/shared/grpc";
+
+import { InjectGrpcClient } from "@mondocinema/common";
+import { UsersServiceClient } from "@mondocinema/contracts/gen/users";
+import { Injectable } from "@nestjs/common";
 import type { ClientGrpc } from "@nestjs/microservices";
 
 @Injectable()
-export class UsersClientGrpc implements OnModuleInit {
-	private usersService: UsersServiceClient;
-
-	constructor(@Inject("USERS_PACKAGE") private readonly client: ClientGrpc) {}
-
-	onModuleInit() {
-		this.usersService = this.client.getService("UsersService");
-	}
-
-	getMe(req: GetMeRequest) {
-		return this.usersService.getMe(req);
-	}
-
-	patchUser(req: PatchUserRequest) {
-		return this.usersService.patchUser(req);
+export class UsersClientGrpc extends AbstractGrpcClient<UsersServiceClient> {
+	constructor(@InjectGrpcClient("USERS_PACKAGE") client: ClientGrpc) {
+		super(client, "UsersService");
 	}
 }

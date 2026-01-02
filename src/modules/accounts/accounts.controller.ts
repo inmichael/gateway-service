@@ -14,7 +14,7 @@ import {
 @ApiBearerAuth()
 @Controller("accounts")
 export class AccountsController {
-	constructor(private readonly accountsClientGrpc: AccountsClientGrpc) {}
+	constructor(private readonly client: AccountsClientGrpc) {}
 
 	@ApiOperation({
 		summary: "Init email change",
@@ -27,7 +27,7 @@ export class AccountsController {
 		@Body() { email }: InitEmailChangeRequest,
 		@CurrentUser() userId: string,
 	) {
-		return this.accountsClientGrpc.initEmailChange({ email, userId });
+		return this.client.call("initEmailChange", { email, userId });
 	}
 
 	@ApiOperation({
@@ -41,7 +41,7 @@ export class AccountsController {
 		@Body() { email, code }: ConfirmEmailChangeRequest,
 		@CurrentUser() userId: string,
 	) {
-		return this.accountsClientGrpc.confirmEmailChange({ email, userId, code });
+		return this.client.call("confirmEmailChange", { code, email, userId });
 	}
 
 	@ApiOperation({
@@ -55,7 +55,7 @@ export class AccountsController {
 		@Body() { phone }: InitPhoneChangeRequest,
 		@CurrentUser() userId: string,
 	) {
-		return this.accountsClientGrpc.initPhoneChange({ phone, userId });
+		return this.client.call("initPhoneChange", { phone, userId });
 	}
 
 	@ApiOperation({
@@ -69,6 +69,6 @@ export class AccountsController {
 		@Body() { phone, code }: ConfirmPhoneChangeRequest,
 		@CurrentUser() userId: string,
 	) {
-		return this.accountsClientGrpc.confirmPhoneChange({ phone, userId, code });
+		return this.client.call("confirmPhoneChange", { code, phone, userId });
 	}
 }

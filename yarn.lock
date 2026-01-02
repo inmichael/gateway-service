@@ -328,10 +328,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@borewit/text-codec@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@borewit/text-codec/-/text-codec-0.1.1.tgz#7e7f27092473d5eabcffef693a849f2cc48431da"
-  integrity sha512-5L/uBxmjaCIX5h8Z+uu+kA9BQLkc/Wl06UGR5ajNRxu+/XjonB5i8JpgFMrPj3LXTCPA0pv8yxUvbUi+QthGGA==
+"@borewit/text-codec@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@borewit/text-codec/-/text-codec-0.2.1.tgz#5d171538907a8cb395fdc2eb5e8f7947d96c7f2f"
+  integrity sha512-k7vvKPbf7J2fZ5klGRD9AeKfUvojuZIQ3BT5u7Jfv+puwXkUBUT5PVyMDfJZpy30CBDXGMgw7fguK/lpOMBvgw==
 
 "@bufbuild/protobuf@^2.0.0", "@bufbuild/protobuf@^2.10.2":
   version "2.10.2"
@@ -968,11 +968,16 @@
   integrity sha512-xgAyonlVVS+q7Vc7qLW0UrJU7rSFcETRWsqdXZtjzRU8dF+6CkozTK4V4y1LwOX7j8r/vHphjDeMeGI4tNGeGA==
 
 "@mondocinema/common@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@mondocinema/common/-/common-1.0.0.tgz#ffb8418517d6c0863cf9a153a750d9a5336d36f4"
-  integrity sha512-85ZlJJ67/uK9Z342lfUIBuMiquiZy5P0UPwi09rML2qAS+TqJHGy8Ly/kSm17P6KvcGdsEC54Zby/o36nkZkzQ==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@mondocinema/common/-/common-1.1.1.tgz#7b167e8da39403f0fd4426412675ec1807090de8"
+  integrity sha512-2UxYpQcVMwixfhpFq+6jU1Ordjc5kK9Ayrp80NxRJqfhGGRoqL7BBZGCU3U8CEsKTBkSoRQHQPGRDPYx6tugLQ==
+  dependencies:
+    "@mondocinema/contracts" "^1.1.3"
+    "@nestjs/common" "^11.1.11"
+    "@nestjs/config" "^4.0.2"
+    "@nestjs/microservices" "^11.1.11"
 
-"@mondocinema/contracts@^1.1.0":
+"@mondocinema/contracts@^1.1.0", "@mondocinema/contracts@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@mondocinema/contracts/-/contracts-1.1.3.tgz#20a741cd57fbf736a29b88b16a4169887a72487f"
   integrity sha512-B5x4z/1sM8fzK28dFkfoNW7PhOkTErf4+/mlJ8K511hE/pyCdRGIWPmEw4CY2KDa8VmI1fbJWUiEGszymIwdQw==
@@ -4932,11 +4937,11 @@ toidentifier@~1.0.1:
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
 
 token-types@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/token-types/-/token-types-6.1.1.tgz#85bd0ada82939b9178ecd5285881a538c4c00fdd"
-  integrity sha512-kh9LVIWH5CnL63Ipf0jhlBIy0UsrMj/NJDfpsy1SqOXlLKEVyXXYrnFxFT1yOOYVGBSApeVnjPw/sBz5BfEjAQ==
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/token-types/-/token-types-6.1.2.tgz#18d0fd59b996d421f9f83914d6101c201bd08129"
+  integrity sha512-dRXchy+C0IgK8WPC6xvCHFRIWYUbqqdEIKPaKo/AcTUNzwLTK6AH7RjdLWsEZcAN/TBdtfUw3PYEgPr5VPr6ww==
   dependencies:
-    "@borewit/text-codec" "^0.1.0"
+    "@borewit/text-codec" "^0.2.1"
     "@tokenizer/token" "^0.3.0"
     ieee754 "^1.2.1"
 

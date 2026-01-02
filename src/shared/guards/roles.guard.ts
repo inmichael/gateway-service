@@ -1,5 +1,4 @@
 import { Request } from "express";
-import { lastValueFrom, NotFoundError, Observable } from "rxjs";
 import { AccountsClientGrpc } from "src/modules/accounts/accounts.grpc";
 
 import { Role } from "@mondocinema/contracts/gen/accounts";
@@ -35,9 +34,9 @@ export class RolesGuard implements CanActivate {
 			throw new ForbiddenException("User context missing");
 		}
 
-		const account = await lastValueFrom(
-			this.accountsClient.getAccount({ id: user.id }),
-		);
+		const account = await this.accountsClient.call("getAccount", {
+			id: user.id,
+		});
 
 		if (!account) {
 			throw new NotFoundException("Account not found");
