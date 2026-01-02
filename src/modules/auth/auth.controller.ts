@@ -18,6 +18,7 @@ import { ApiOperation } from "@nestjs/swagger";
 import { AuthClientGrpc } from "./auth.grpc";
 import {
 	SendOtpRequest,
+	TelegramFinalizeRequest,
 	TelegramVerifyRequest,
 	VerifyOtpRequest,
 } from "./dto/requests";
@@ -136,5 +137,26 @@ export class AuthController {
 		}
 
 		throw new UnauthorizedException("Invalid Telegram login response");
+	}
+
+	@Post("telegram/finalize")
+	@HttpCode(HttpStatus.OK)
+	async finalizeTelegramLogin(
+		@Body() { sessionId }: TelegramFinalizeRequest,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { accessToken, refreshToken } = await lastValueFrom(
+			this.grpcClient.telegramConsume({ sessionId }),
+		);
+
+		res.cookie("refreshToken", refreshToken, {
+			httpOnly: true,
+			secure: this.configService.get("NODE_ENV") !== "development",
+			domain: this.configService.getOrThrow("COOKIES_DOMAIN"),
+			sameSite: "lax",
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+		});
+
+		return { accessToken };
 	}
 }
