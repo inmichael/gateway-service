@@ -1,6 +1,7 @@
 import { AccountsModule } from "src/modules/accounts/accounts.module";
 import { AuthModule } from "src/modules/auth/auth.module";
 import { UsersModule } from "src/modules/users/users.module";
+import { ObservabilityModule } from "src/observability/observability.module";
 
 import { PassportModule } from "@mondocinema/passport";
 import { Module } from "@nestjs/common";
@@ -24,6 +25,7 @@ import { getPassportConfig } from "./config";
 			useFactory: getPassportConfig,
 			inject: [ConfigService],
 		}),
+		ObservabilityModule,
 		AuthModule,
 		AccountsModule,
 		UsersModule,
